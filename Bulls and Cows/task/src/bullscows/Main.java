@@ -5,10 +5,19 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        Generator generator = new Generator();
+        Scanner scanner = new Scanner(System.in);
+        int len = scanner.nextInt();
+        System.out.println(generator.generateNumber(len));
+
+
+    }
+
+    public static void stage2() {
         int[] predefinedCode = createCode();
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-//        int[] answer = stringToCode(s);
         int[] grading = grader(s, predefinedCode);
 
         int bulls = grading[0];
@@ -22,11 +31,8 @@ public class Main {
             System.out.printf("\nGrade: %s bull(s) and %s cow(s). The secret code is %s.", bulls, cows,
                     codeToString(predefinedCode));
         }
-
-
-
-
     }
+
     public static int[] stringToCode(String str) {
         int[] code = new int[str.length()];
         for (int i = 0; i < str.length(); i++) {
@@ -44,6 +50,7 @@ public class Main {
     }
 
     public static int[] createCode() {
+        // for future improvement: predefined code numbers should not repeat
         Random random = new Random();
         int[] code = new int[4];
         for (int i = 0; i < code.length; i++) {

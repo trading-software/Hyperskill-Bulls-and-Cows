@@ -177,10 +177,13 @@ files:
         }
     }
   learner_created: false
+- name: src/bullscows/Generator.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/53/stages/288/implement
 status: Solved
 feedback:
   message: Congratulations! Continue on <a href="https://hyperskill.org/projects/53/stages/288/implement">JetBrains
     Academy</a>
   time: Thu, 08 Oct 2020 17:45:09 UTC
-record: -1
+record: 2

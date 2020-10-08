@@ -1,2 +1,4 @@
+bullscows/Generator.java
+ bullscows.Generator
 bullscows/Main.java
  bullscows.Main
