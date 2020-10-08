@@ -1,3 +1,7 @@
+bullscows/SecretCode.java
+ bullscows.SecretCode
+bullscows/InvalidNumberLength.java
+ bullscows.InvalidNumberLength
 bullscows/Generator.java
  bullscows.Generator
 bullscows/Main.java

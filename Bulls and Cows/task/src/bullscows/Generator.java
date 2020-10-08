@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class Generator {
 
-    public String generateNumber(int length) {
+    public String generateNumber(int length) throws InvalidNumberLength{
         if (length > 10) {
-            return "Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.";
+            throw new InvalidNumberLength();
+            //return "Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.";
 
         }
         String output = "";
@@ -17,7 +18,7 @@ public class Generator {
         StringBuilder s = new StringBuilder("" + pseudoRandomNumber);
         s.reverse();
 
-        while (output.length() < length){
+        while (output.length() != length) {
             pseudoRandomNumber = System.nanoTime();
             s = new StringBuilder("" + pseudoRandomNumber);
             s.reverse();
