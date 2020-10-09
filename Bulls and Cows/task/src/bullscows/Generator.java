@@ -4,9 +4,51 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Generator {
+    private final int length;
+    private final int symbols;
+    public Generator(int length, int symbols) {
+        this.length = length;
+        this.symbols = symbols;
+    }
 
-    public String generateNumber(int length) throws InvalidNumberLength{
-        if (length > 10) {
+    public String getCodeDescription() {
+        StringBuilder sb = new StringBuilder("The secret is prepared: ");
+        for (int i = 0; i < length; i++) {
+            sb.append('*');
+        }
+        sb.append(symbols < 10 ?
+                String.format(" (0-%d).", symbols) :
+                String.format(" (0-9, a-%c).", (char)(symbols + 86)));
+        return sb.toString();
+    }
+
+    public String generateNumber(int length, int symbols) throws InvalidNumberLength{
+        if (length > 36) {
+            throw new InvalidNumberLength();
+        }
+        String output = "";
+        ArrayList<Character>  usedCharacters = new ArrayList<>();
+        Random random = new Random();
+        while (output.length() != length) {
+            int seed = random.nextInt(symbols);
+            Character ch = mapSeedToChar(seed);
+            if (!usedCharacters.contains(ch)) {
+                output += ch.toString();
+                usedCharacters.add(ch);
+            }
+        }
+        return output;
+    }
+
+    public Character mapSeedToChar(int seed) {
+        if (seed < 10)
+            return Character.valueOf((char) (seed + 48));
+        else
+            return Character.valueOf((char) (seed + 87));
+    }
+
+    public String generateNumber10(int length) throws InvalidNumberLength{
+        if (length > 36) {
             throw new InvalidNumberLength();
         }
         String output = "";
@@ -17,38 +59,6 @@ public class Generator {
             if (!usedNumbers.contains(num)) {
                 output += num.toString();
                 usedNumbers.add(num);
-            }
-        }
-        return output;
-    }
-
-    public String generateNumberOld(int length) throws InvalidNumberLength{
-        if (length > 10) {
-            throw new InvalidNumberLength();
-            //return "Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.";
-
-        }
-        String output = "";
-        ArrayList<Integer>  usedNumbers = new ArrayList<>();
-
-        long pseudoRandomNumber = System.nanoTime();
-
-        StringBuilder s = new StringBuilder("" + pseudoRandomNumber);
-        s.reverse();
-
-        while (output.length() != length) {
-            pseudoRandomNumber = System.nanoTime();
-            s = new StringBuilder("" + pseudoRandomNumber);
-            s.reverse();
-            for (int i = 0; i < s.length(); i++) {
-                Integer integer = Integer.parseInt("" + s.charAt(i));
-
-                if (!usedNumbers.contains(integer)) {
-                    usedNumbers.add(integer);
-                    output += integer;
-                    if (output.length() == length)
-                        break;
-                }
             }
         }
         return output;

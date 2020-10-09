@@ -2,27 +2,11 @@ package bullscows;
 
 public class SecretCode {
     private final String secretCode;
-    private final int[] code;
-
-//    public int getBulls() {
-//        return bulls;
-//    }
-//
-//    private int bulls;
-//
-//    public int getCows() {
-//        return cows;
-//    }
-//
-//    private int cows;
-
+    private final char[] code;
 
     public SecretCode(String secretCode) {
         this.secretCode = secretCode;
-        code = new int[secretCode.length()];
-        for (int i = 0; i < secretCode.length(); i++) {
-            code[i] = Integer.parseInt("" + secretCode.charAt(i));
-        }
+        code = secretCode.toCharArray();
     }
     public int length() {
         return secretCode.length();
@@ -34,7 +18,7 @@ public class SecretCode {
         int[] answer = new int[answerStr.length()];
 
         for (int i = 0; i < answerStr.length(); i++) {
-            answer[i] = Integer.parseInt("" + answerStr.charAt(i));
+            answer[i] = answerStr.charAt(i);
         }
 
         for (int i = 0; i < code.length; i++) {

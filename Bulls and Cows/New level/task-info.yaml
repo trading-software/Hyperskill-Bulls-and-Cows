@@ -308,6 +308,98 @@ files:
         }
     }
   learner_created: false
+- name: src/bullscows/SecretCode.java
+  visible: true
+  text: "package bullscows;\n\npublic class SecretCode {\n    private final String\
+    \ secretCode;\n    private final int[] code;\n    \n    public SecretCode(String\
+    \ secretCode) {\n        this.secretCode = secretCode;\n        code = new int[secretCode.length()];\n\
+    \        for (int i = 0; i < secretCode.length(); i++) {\n            code[i]\
+    \ = Integer.parseInt(\"\" + secretCode.charAt(i));\n        }\n    }\n    public\
+    \ int length() {\n        return secretCode.length();\n    }\n\n    public  int[]\
+    \ grade(String answerStr) {\n        int bulls = 0;\n        int cows = 0;\n \
+    \       int[] answer = new int[answerStr.length()];\n\n        for (int i = 0;\
+    \ i < answerStr.length(); i++) {\n            answer[i] = Integer.parseInt(\"\"\
+    \ + answerStr.charAt(i));\n        }\n\n        for (int i = 0; i < code.length;\
+    \ i++) {\n            if (answer[i] == code[i]) {\n                bulls++;\n\
+    \            } else if (contains(answer[i])) {\n                cows++;\n    \
+    \        }\n        }\n        return new int[] {bulls, cows};\n    }\n\n    private\
+    \ boolean contains(int x) {\n        for (int i = 0; i < secretCode.length();\
+    \ i++) {\n            if (code[i] == x)\n                return true;\n      \
+    \  }\n        return false;\n    }\n}\n"
+  learner_created: true
+- name: src/bullscows/InvalidNumberLength.java
+  visible: true
+  text: |
+    package bullscows;
+
+    public class InvalidNumberLength extends Exception {
+
+    }
+  learner_created: true
+- name: src/bullscows/Generator.java
+  visible: true
+  text: |
+    package bullscows;
+
+    import java.util.ArrayList;
+    import java.util.Random;
+
+    public class Generator {
+
+        public String generateNumber(int length) throws InvalidNumberLength{
+            if (length > 10) {
+                throw new InvalidNumberLength();
+            }
+            String output = "";
+            ArrayList<Integer>  usedNumbers = new ArrayList<>();
+            Random random = new Random();
+            while (output.length() != length) {
+                Integer num = random.nextInt(10);
+                if (!usedNumbers.contains(num)) {
+                    output += num.toString();
+                    usedNumbers.add(num);
+                }
+            }
+            return output;
+        }
+
+        public String generateNumberOld(int length) throws InvalidNumberLength{
+            if (length > 10) {
+                throw new InvalidNumberLength();
+                //return "Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.";
+
+            }
+            String output = "";
+            ArrayList<Integer>  usedNumbers = new ArrayList<>();
+
+            long pseudoRandomNumber = System.nanoTime();
+
+            StringBuilder s = new StringBuilder("" + pseudoRandomNumber);
+            s.reverse();
+
+            while (output.length() != length) {
+                pseudoRandomNumber = System.nanoTime();
+                s = new StringBuilder("" + pseudoRandomNumber);
+                s.reverse();
+                for (int i = 0; i < s.length(); i++) {
+                    Integer integer = Integer.parseInt("" + s.charAt(i));
+
+                    if (!usedNumbers.contains(integer)) {
+                        usedNumbers.add(integer);
+                        output += integer;
+                        if (output.length() == length)
+                            break;
+                    }
+                }
+            }
+            return output;
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/53/stages/292/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/53/stages/292/implement">JetBrains
+    Academy</a>
+  time: Fri, 09 Oct 2020 10:32:02 UTC
 record: -1

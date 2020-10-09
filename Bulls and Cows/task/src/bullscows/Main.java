@@ -6,12 +6,17 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Generator generator = new Generator();
+        Generator generator;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please, enter the secret code's length:");
         int len = Integer.parseInt(scanner.nextLine());
+        System.out.println("Input the number of possible symbols in the code:");
+        int symbols = Integer.parseInt(scanner.nextLine());
+        generator = new Generator(len, symbols);
+
         try {
-            SecretCode secretCode = new SecretCode(generator.generateNumber(len));
+            SecretCode secretCode = new SecretCode(generator.generateNumber(len, symbols));
+            System.out.println(generator.getCodeDescription());
             System.out.println("Okay, let's start a game!");
             int turn = 1;
             int bulls = 0;
