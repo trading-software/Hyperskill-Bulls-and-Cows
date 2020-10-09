@@ -1,8 +1,8 @@
 package bullscows;
 
 public class SecretCode {
-    private String secretCode;
-    private int[] code;
+    private final String secretCode;
+    private final int[] code;
 
 //    public int getBulls() {
 //        return bulls;

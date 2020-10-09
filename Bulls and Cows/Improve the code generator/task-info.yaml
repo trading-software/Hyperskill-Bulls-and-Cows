@@ -241,6 +241,122 @@ files:
         }
     }
   learner_created: false
+- name: src/bullscows/SecretCode.java
+  visible: true
+  text: |
+    package bullscows;
+
+    public class SecretCode {
+        private String secretCode;
+        private int[] code;
+
+    //    public int getBulls() {
+    //        return bulls;
+    //    }
+    //
+    //    private int bulls;
+    //
+    //    public int getCows() {
+    //        return cows;
+    //    }
+    //
+    //    private int cows;
+
+
+        public SecretCode(String secretCode) {
+            this.secretCode = secretCode;
+            code = new int[secretCode.length()];
+            for (int i = 0; i < secretCode.length(); i++) {
+                code[i] = Integer.parseInt("" + secretCode.charAt(i));
+            }
+        }
+        public int length() {
+            return secretCode.length();
+        }
+
+        public  int[] grade(String answerStr) {
+            int bulls = 0;
+            int cows = 0;
+            int[] answer = new int[answerStr.length()];
+
+            for (int i = 0; i < answerStr.length(); i++) {
+                answer[i] = Integer.parseInt("" + answerStr.charAt(i));
+            }
+
+            for (int i = 0; i < code.length; i++) {
+                if (answer[i] == code[i]) {
+                    bulls++;
+                } else if (contains(answer[i])) {
+                    cows++;
+                }
+            }
+            return new int[] {bulls, cows};
+        }
+
+        private boolean contains(int x) {
+            for (int i = 0; i < secretCode.length(); i++) {
+                if (code[i] == x)
+                    return true;
+            }
+            return false;
+        }
+    }
+  learner_created: true
+- name: src/bullscows/InvalidNumberLength.java
+  visible: true
+  text: |
+    package bullscows;
+
+    public class InvalidNumberLength extends Exception {
+
+    }
+  learner_created: true
+- name: src/bullscows/Generator.java
+  visible: true
+  text: |
+    package bullscows;
+
+    import java.util.ArrayList;
+
+    public class Generator {
+
+        public String generateNumber(int length) throws InvalidNumberLength{
+            if (length > 10) {
+                throw new InvalidNumberLength();
+                //return "Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.";
+
+            }
+            String output = "";
+            ArrayList<Integer>  usedNumbers = new ArrayList<>();
+
+            long pseudoRandomNumber = System.nanoTime();
+
+            StringBuilder s = new StringBuilder("" + pseudoRandomNumber);
+            s.reverse();
+
+            while (output.length() != length) {
+                pseudoRandomNumber = System.nanoTime();
+                s = new StringBuilder("" + pseudoRandomNumber);
+                s.reverse();
+                for (int i = 0; i < s.length(); i++) {
+                    Integer integer = Integer.parseInt("" + s.charAt(i));
+
+                    if (!usedNumbers.contains(integer)) {
+                        usedNumbers.add(integer);
+                        output += integer;
+                        if (output.length() == length)
+                            break;
+                    }
+                }
+            }
+            return output;
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/53/stages/291/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/53/stages/291/implement">JetBrains
+    Academy</a>
+  time: Fri, 09 Oct 2020 09:26:52 UTC
 record: -1

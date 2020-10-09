@@ -30,7 +30,7 @@ public class Main {
             }
             System.out.println("Congratulations! You guessed the secret code.");
         } catch (InvalidNumberLength e) {
-            System.out.println("Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.");
+            System.out.println("Error: can't generate a secret number with a length of more than 10 because there aren't enough unique digits.");
         }
 
     }

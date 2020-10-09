@@ -1,10 +1,28 @@
 package bullscows;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Generator {
 
     public String generateNumber(int length) throws InvalidNumberLength{
+        if (length > 10) {
+            throw new InvalidNumberLength();
+        }
+        String output = "";
+        ArrayList<Integer>  usedNumbers = new ArrayList<>();
+        Random random = new Random();
+        while (output.length() != length) {
+            Integer num = random.nextInt(10);
+            if (!usedNumbers.contains(num)) {
+                output += num.toString();
+                usedNumbers.add(num);
+            }
+        }
+        return output;
+    }
+
+    public String generateNumberOld(int length) throws InvalidNumberLength{
         if (length > 10) {
             throw new InvalidNumberLength();
             //return "Error: can't generate a secret number with a length of 11 because there aren't enough unique digits.";
