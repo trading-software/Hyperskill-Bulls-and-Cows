@@ -6,15 +6,22 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Generator generator;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please, enter the secret code's length:");
-        int len = Integer.parseInt(scanner.nextLine());
-        System.out.println("Input the number of possible symbols in the code:");
-        int symbols = Integer.parseInt(scanner.nextLine());
-        generator = new Generator(len, symbols);
-
         try {
+            Generator generator;
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please, enter the secret code's length:");
+            int len = Integer.parseInt(scanner.nextLine());
+            if (len > 36 || len < 1) throw new GameException();
+
+            System.out.println("Input the number of possible symbols in the code:");
+            int symbols = Integer.parseInt(scanner.nextLine());
+            if (symbols > 36 || symbols < 1) throw new GameException();
+
+            if (symbols < len) throw new GameException();
+
+            generator = new Generator(len, symbols);
+
+
             SecretCode secretCode = new SecretCode(generator.generateNumber(len, symbols));
             System.out.println(generator.getCodeDescription());
             System.out.println("Okay, let's start a game!");
@@ -36,6 +43,12 @@ public class Main {
             System.out.println("Congratulations! You guessed the secret code.");
         } catch (InvalidNumberLength e) {
             System.out.println("Error: can't generate a secret number with a length of more than 10 because there aren't enough unique digits.");
+        } catch (GameException e) {
+            System.out.println("error " + e);
+        } catch (NumberFormatException nfe) {
+            System.out.println("error " + nfe);
+        } catch (Exception e) {
+            System.out.println("error");
         }
 
     }

@@ -407,6 +407,137 @@ files:
         }
     }
   learner_created: false
+- name: src/bullscows/SecretCode.java
+  visible: true
+  text: |
+    package bullscows;
+
+    public class SecretCode {
+        private final String secretCode;
+        private final char[] code;
+
+        public SecretCode(String secretCode) {
+            this.secretCode = secretCode;
+            code = secretCode.toCharArray();
+        }
+        public int length() {
+            return secretCode.length();
+        }
+
+        public  int[] grade(String answerStr) {
+            int bulls = 0;
+            int cows = 0;
+            int[] answer = new int[answerStr.length()];
+
+            for (int i = 0; i < answerStr.length(); i++) {
+                answer[i] = answerStr.charAt(i);
+            }
+
+            for (int i = 0; i < code.length; i++) {
+                if (answer[i] == code[i]) {
+                    bulls++;
+                } else if (contains(answer[i])) {
+                    cows++;
+                }
+            }
+            return new int[] {bulls, cows};
+        }
+
+        private boolean contains(int x) {
+            for (int i = 0; i < secretCode.length(); i++) {
+                if (code[i] == x)
+                    return true;
+            }
+            return false;
+        }
+    }
+  learner_created: true
+- name: src/bullscows/InvalidNumberLength.java
+  visible: true
+  text: |
+    package bullscows;
+
+    public class InvalidNumberLength extends Exception {
+
+    }
+  learner_created: true
+- name: src/bullscows/Generator.java
+  visible: true
+  text: |
+    package bullscows;
+
+    import java.util.ArrayList;
+    import java.util.Random;
+
+    public class Generator {
+        private final int length;
+        private final int symbols;
+        public Generator(int length, int symbols) {
+            this.length = length;
+            this.symbols = symbols;
+        }
+
+        public String getCodeDescription() {
+            StringBuilder sb = new StringBuilder("The secret is prepared: ");
+            for (int i = 0; i < length; i++) {
+                sb.append('*');
+            }
+            sb.append(symbols < 10 ?
+                    String.format(" (0-%d).", symbols) :
+                    String.format(" (0-9, a-%c).", (char)(symbols + 86)));
+            return sb.toString();
+        }
+
+        public String generateNumber(int length, int symbols) throws InvalidNumberLength{
+            if (length > 36) {
+                throw new InvalidNumberLength();
+            }
+            String output = "";
+            ArrayList<Character>  usedCharacters = new ArrayList<>();
+            Random random = new Random();
+            while (output.length() != length) {
+                int seed = random.nextInt(symbols);
+                Character ch = mapSeedToChar(seed);
+                if (!usedCharacters.contains(ch)) {
+                    output += ch.toString();
+                    usedCharacters.add(ch);
+                }
+            }
+            return output;
+        }
+
+        public Character mapSeedToChar(int seed) {
+            if (seed < 10)
+                return Character.valueOf((char) (seed + 48));
+            else
+                return Character.valueOf((char) (seed + 87));
+        }
+
+        public String generateNumber10(int length) throws InvalidNumberLength{
+            if (length > 36) {
+                throw new InvalidNumberLength();
+            }
+            String output = "";
+            ArrayList<Integer>  usedNumbers = new ArrayList<>();
+            Random random = new Random();
+            while (output.length() != length) {
+                Integer num = random.nextInt(10);
+                if (!usedNumbers.contains(num)) {
+                    output += num.toString();
+                    usedNumbers.add(num);
+                }
+            }
+            return output;
+        }
+    }
+  learner_created: true
+- name: src/bullscows/GameException.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/53/stages/293/implement
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/53/stages/293/implement">JetBrains
+    Academy</a>
+  time: Fri, 09 Oct 2020 13:54:26 UTC
 record: -1

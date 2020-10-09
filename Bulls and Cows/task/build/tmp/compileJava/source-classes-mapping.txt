@@ -4,5 +4,7 @@ bullscows/SecretCode.java
  bullscows.SecretCode
 bullscows/Generator.java
  bullscows.Generator
+bullscows/GameException.java
+ bullscows.GameException
 bullscows/Main.java
  bullscows.Main
